@@ -24,6 +24,6 @@
 <img src="assets/footer.svg" width="100%" alt="thanks for visiting" />
 
 <p align="right">
-  <a href="https://www.linkedin.com/in/fares-ayman"><img src="assets/btn-linkedin.svg" height="34" alt="LinkedIn" /></a>
+  <a href="https://www.linkedin.com/in/fares-ayman-b871a8237"><img src="assets/btn-linkedin.svg" height="34" alt="LinkedIn" /></a>
   <a href="https://portfolio-fares-ayman-1s-projects.vercel.app"><img src="assets/btn-portfolio.svg" height="34" alt="Portfolio" /></a>
 </p>

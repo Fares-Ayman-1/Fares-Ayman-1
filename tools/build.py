@@ -217,7 +217,7 @@ def ascii_markup(row) -> str:
 
 def neofetch_lines() -> list[tuple[str, str]]:
     email = os.environ.get("PROFILE_EMAIL", "").strip()
-    contact = ([("Email: ", email)] if email else []) + [("LinkedIn: ", "in/fares-ayman")]
+    contact = ([("Email: ", email)] if email else []) + [("LinkedIn: ", "in/fares-ayman-b871a8237")]
     return [
         ("fares", "@github"), ("", "─" * 30),
         ("OS: ", "Windows 11 · Linux containers"), ("Role: ", "AI Engineer"),
