@@ -41,6 +41,7 @@ FONT_FILES = {
     ("JBM", 700): "JetBrainsMono-Bold.ttf",
     ("SG", 500): "SpaceGrotesk-Medium.ttf",
     ("SG", 700): "SpaceGrotesk-Bold.ttf",
+    ("SORA", 700): "Sora-Bold.ttf",
 }
 REDUCED = "@media (prefers-reduced-motion:reduce){*{animation:none!important}}"
 
@@ -506,6 +507,30 @@ def button(label: str, bg: str, fg="#fff", border=None) -> str:
     return svg(w, h, body, f".b{{font-family:{SANS};font-weight:700;font-size:14px;fill:{fg}}}", [("SG", 700)], label)
 
 
+def text_width(fam: str, wt: int, text: str, size: float) -> float:
+    from fontTools.ttLib import TTFont
+
+    font = TTFont(FONTS / FONT_FILES[(fam, wt)])
+    cmap, hmtx = font.getBestCmap(), font["hmtx"]
+    return sum(hmtx[cmap[ord(c)]][0] for c in text) * size / font["head"].unitsPerEm
+
+
+def quantro_button() -> str:
+    """Quantro AI lock-up from its brand system: gold spark, "Quantro" cream + "AI" gold, Sora, on navy."""
+    size, h = 14, 34
+    w1, w2 = text_width("SORA", 700, "Quantro ", size), text_width("SORA", 700, "AI", size)
+    x0 = 14 + 12 + 7
+    w = round(x0 + w1 + w2 + 14)
+    spark = "M0 -6.5C.7 -2.2 2.2 -.7 6.5 0C2.2 .7 .7 2.2 0 6.5C-.7 2.2 -2.2 .7 -6.5 0C-2.2 -.7 -.7 -2.2 0 -6.5Z"
+    body = (
+        f'<rect x=".5" y=".5" width="{w - 1}" height="{h - 1}" rx="6" fill="#0C1733" stroke="#3C507E"/>'
+        f'<path d="{spark}" transform="translate(20 17)" fill="#D3AE6C"/>'
+        f'<text x="{x0}" y="22" class="b">Quantro <tspan class="ai">AI</tspan></text>'
+    )
+    css = f".b{{font-family:'SORA',Sora,{SANS};font-weight:700;font-size:{size}px;fill:#F5F1EA;letter-spacing:-.01em}}.ai{{fill:#D3AE6C}}"
+    return svg(w, h, body, css, [("SORA", 700)], "Quantro AI")
+
+
 # ---------------------------------------------------------------- live: GitHub API
 def token() -> str:
     tok = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
@@ -832,6 +857,8 @@ def main() -> None:
         write(out / "btn-linkedin.svg", button("LinkedIn", "#0a66c2"))
         write(out / "btn-gmail.svg", button("Gmail", "#ea4335"))
         write(out / "btn-portfolio.svg", button("Portfolio", "#21262d", "#e6edf3", "#30363d"))
+        write(out / "btn-kaggle.svg", button("Kaggle", "#20BEFF", "#0d1117"))
+        write(out / "btn-quantro.svg", quantro_button())
     if a.target in ("live", "all"):
         out = ROOT / a.out
         print(f"live ({a.user}) -> {a.out}/")
